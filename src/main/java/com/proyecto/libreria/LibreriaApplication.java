@@ -1,11 +1,9 @@
 package com.proyecto.libreria;
 
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.proyecto.libreria.servicios.ConsumoApi;
+import com.proyecto.libreria.main.Main;
 
 @SpringBootApplication
 public class LibreriaApplication implements CommandLineRunner {
@@ -16,8 +14,8 @@ public class LibreriaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		var consumoApi= new ConsumoApi();
-		var json= consumoApi.obtenerDatos("https://gutendex.com/books/?search=dickens%20great");
-		System.out.println(json);
-}
+		Main main = new Main();
+		main.muestraElMenu();
+	}
+	
 }
