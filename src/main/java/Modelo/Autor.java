@@ -1,12 +1,21 @@
 package Modelo;
 
+import java.util.List;
 
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "autores")
 public class Autor {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+    @Column(unique = true)
     private String nombre;
     private Integer anoNacimiento;
     private Integer anoFallecimiento;
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Libros> libros;
 
     public Autor() {
     }
@@ -21,6 +30,10 @@ public class Autor {
         return  "nombre='" + nombre + 
                 ", año nacimiento='" + anoFallecimiento +
                 ", año fallecimiento='" + anoFallecimiento ;
+    }
+    public void setLibros(Libros libro) {
+        
+        this.libros.add(libro);
     }
 
     public String getNombre() {

@@ -13,7 +13,6 @@ public record DatosLibro(
     @JsonAlias("subjects") List categorias,
     @JsonAlias("languages") List lenguajes,
     @JsonAlias("download_count") Integer totalDescargas
-    
 ) {
 
 }

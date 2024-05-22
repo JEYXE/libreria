@@ -2,20 +2,25 @@ package Modelo;
 
 import java.util.List;
 
+import jakarta.persistence.*;
+
 public class Libros {
-   
+    @Id
     private Integer id;
     private String titulo;
-    private Autor Autor;
+    @ManyToOne
+    private Autor autor;
     private List categorias;
     private List lenguajes;
     private Integer totalDescargas;
     
     public Libros() {
     }
+
     public Libros(DatosLibro datosLibro){
         this.id = datosLibro.id();
         this.titulo= datosLibro.titulo();
+        this.autor=new Autor(datosLibro.datosAutor().stream().findFirst().get());
         this.categorias= datosLibro.categorias();
         this.lenguajes=datosLibro.lenguajes();
         this.totalDescargas=datosLibro.totalDescargas();  
@@ -25,6 +30,7 @@ public class Libros {
         return  "id='" + id + 
                 ", titulo='" + titulo +
                 ", categorias='" + categorias +
+                ", autor='" + autor +
                 ", lenguajes='" + lenguajes +
                 ", total de descargas='" + totalDescargas  ;
     }
@@ -41,10 +47,10 @@ public class Libros {
         this.titulo = titulo;
     }
     public Autor getAutor() {
-        return Autor;
+        return autor;
     }
     public void setAutor(Autor autor) {
-        Autor = autor;
+        autor = autor;
     }
     public List getCategorias() {
         return categorias;
