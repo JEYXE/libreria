@@ -1,4 +1,5 @@
-package Modelo;
+package com.proyecto.libreria.Modelo;
+
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Autor {
     private Integer anoNacimiento;
     private Integer anoFallecimiento;
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Libros> libros;
+    private List<Libro> libros;
 
     public Autor() {
     }
@@ -25,15 +26,22 @@ public class Autor {
         this.anoNacimiento= datosAutor.anoNacimiento();
         this.anoFallecimiento= datosAutor.anoFallecimiento(); 
     }
+  
+
     @Override
     public String toString() {
         return  "nombre='" + nombre + 
-                ", año nacimiento='" + anoFallecimiento +
-                ", año fallecimiento='" + anoFallecimiento ;
+                ", año nacimiento='" + anoNacimiento +
+                ", año fallecimiento='" + anoFallecimiento+
+                ", libros: "+ libros ;
     }
-    public void setLibros(Libros libro) {
-        
-        this.libros.add(libro);
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getNombre() {
@@ -59,6 +67,18 @@ public class Autor {
     public void setAnoFallecimiento(Integer anoFallecimiento) {
         this.anoFallecimiento = anoFallecimiento;
     }
+
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(Libro libro) {
+        libro.setAutor(this);
+        System.out.println(libro);
+        this.libros.add(libro);
+        System.out.println(this.libros);
+    }
+    
 
     
 

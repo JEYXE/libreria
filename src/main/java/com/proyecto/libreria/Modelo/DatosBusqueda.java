@@ -1,4 +1,4 @@
-package Modelo;
+package com.proyecto.libreria.Modelo;
 
 import java.util.List;
 

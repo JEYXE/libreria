@@ -1,4 +1,4 @@
-package Modelo;
+package com.proyecto.libreria.Modelo;
 
 import java.util.List;
 
@@ -7,11 +7,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record DatosLibro(
-    @JsonAlias("id") Integer id,
+    @JsonAlias("id") Integer codigo,
     @JsonAlias("title") String titulo,
     @JsonAlias("authors") List<DatosAutor> datosAutor,
-    @JsonAlias("subjects") List categorias,
-    @JsonAlias("languages") List lenguajes,
+    @JsonAlias("languages") List<String> lenguajes,
     @JsonAlias("download_count") Integer totalDescargas
 ) {
 

@@ -1,4 +1,4 @@
-package Modelo;
+package com.proyecto.libreria.Modelo;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

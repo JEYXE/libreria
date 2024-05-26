@@ -1,73 +1,86 @@
-package Modelo;
+package com.proyecto.libreria.Modelo;
 
 import java.util.List;
 
 import jakarta.persistence.*;
-
-public class Libros {
+@Entity
+@Table(name = "libros")
+public class Libro {
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Integer codigo;
     private String titulo;
     @ManyToOne
     private Autor autor;
-    private List categorias;
-    private List lenguajes;
+    private List<String> lenguajes;
     private Integer totalDescargas;
     
-    public Libros() {
+    public Libro() {
     }
 
-    public Libros(DatosLibro datosLibro){
-        this.id = datosLibro.id();
+    public Libro(DatosLibro datosLibro,Autor autor){
+        this.codigo= datosLibro.codigo();
         this.titulo= datosLibro.titulo();
-        this.autor=new Autor(datosLibro.datosAutor().stream().findFirst().get());
-        this.categorias= datosLibro.categorias();
+        this.autor=autor;
         this.lenguajes=datosLibro.lenguajes();
         this.totalDescargas=datosLibro.totalDescargas();  
     }
     @Override
     public String toString() {
-        return  "id='" + id + 
+        return   
                 ", titulo='" + titulo +
-                ", categorias='" + categorias +
                 ", autor='" + autor +
                 ", lenguajes='" + lenguajes +
                 ", total de descargas='" + totalDescargas  ;
     }
-    public Integer getId() {
+
+    public Long getId() {
         return id;
     }
-    public void setId(Integer id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
     public String getTitulo() {
         return titulo;
     }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
+
     public Autor getAutor() {
         return autor;
     }
+
     public void setAutor(Autor autor) {
-        autor = autor;
+        this.autor = autor;
     }
-    public List getCategorias() {
-        return categorias;
-    }
-    public void setCategorias(List categorias) {
-        this.categorias = categorias;
-    }
-    public List getLenguajes() {
+
+    public List<String> getLenguajes() {
         return lenguajes;
     }
-    public void setLenguajes(List lenguajes) {
+
+    public void setLenguajes(List<String> lenguajes) {
         this.lenguajes = lenguajes;
     }
+
     public Integer getTotalDescargas() {
         return totalDescargas;
     }
+
     public void setTotalDescargas(Integer totalDescargas) {
         this.totalDescargas = totalDescargas;
     }
+    
 }

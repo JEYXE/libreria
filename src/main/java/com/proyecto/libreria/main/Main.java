@@ -3,10 +3,11 @@ package com.proyecto.libreria.main;
 import java.util.stream.Collectors;
 import java.util.*;
 
+import com.proyecto.libreria.Modelo.*;
+import com.proyecto.libreria.repository.AutorRepository;
+import com.proyecto.libreria.repository.LibroRepository;
 import com.proyecto.libreria.servicios.ConsumoApi;
 import com.proyecto.libreria.servicios.ConvierteDatos;
-
-import Modelo.*;
 
 
 public class Main {
@@ -14,6 +15,14 @@ public class Main {
     private ConsumoApi consumoApi = new ConsumoApi();
     private final String URL_BASE = "https://gutendex.com/books/?search=";
     private ConvierteDatos conversor = new ConvierteDatos();
+    private LibroRepository repositorioLibro;
+    private AutorRepository repositorioAutor;
+
+
+    public Main(LibroRepository repositorioLibro,AutorRepository repositorioAutor) {
+        this.repositorioLibro= repositorioLibro;
+        this.repositorioAutor= repositorioAutor;
+    }
 
     public void muestraElMenu() {
         var opcion = " ";
@@ -60,11 +69,22 @@ public class Main {
         if(datos.count()==0){
             System.out.println("\nlos criterios de busqueda no arrojaron resultados\n");
         }else{
-            System.out.println(datos);
-            System.out.println(datos.libros().stream().findFirst().get());
-            Libros libro = new Libros(datos.libros().stream().findFirst().get());
+            //System.out.println(datos);
+            DatosLibro datosLibro = datos.libros().get(0);
+            DatosAutor datosAutor = datosLibro.datosAutor().get(0);
+            
+            System.out.println(datosAutor);
+            System.out.println(datosLibro);
+            Autor autor =new Autor(datosAutor);
+            System.out.println(autor);
+            Libro libro =new Libro(datosLibro,autor);
             System.out.println(libro);
-            System.out.println(libro.getAutor());
+            //autor.setLibros(libro);
+            System.out.println(autor);
+            //System.out.println(libro.getAutor());
+            //repositorio.save(Autor);
+            repositorioAutor.save(autor);
+            repositorioLibro.save(libro);
 
 
         }
