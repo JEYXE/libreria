@@ -1,7 +1,9 @@
 package com.proyecto.libreria.main;
 
-import java.util.stream.Collectors;
+
 import java.util.*;
+
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.proyecto.libreria.Modelo.*;
 import com.proyecto.libreria.repository.AutorRepository;
@@ -29,11 +31,15 @@ public class Main {
         while (!opcion.equals("Q")) {
             var menu = """
 
-                    BIENVENIDOS A LA LIBRERIA
+                    ***** BIENVENIDOS A LA LIBRERIA *****
 
-                    por favor seleccione una opción:
+                    Por favor seleccione una opción:
 
-                    1 - Buscar libros 
+                    1 - Buscar libros por titulo 
+
+                    2 - Listar libros registrados
+
+                    3 - Listar autores registrados
                                   
                     Q - Salir
                     """;
@@ -43,6 +49,10 @@ public class Main {
 
             switch (opcion) {
                 case "1":buscaLibro();
+                    break;
+                case "2":buscaLibros();
+                    break;
+                case "3":buscaAutores();
                     break;
                 case "Q":
                     System.out.println("\nCerrando la aplicación...\n");
@@ -57,8 +67,8 @@ public class Main {
     private DatosBusqueda getDatosLibro() {
         System.out.println("\nEscribe el nombre del libro que deseas buscar\n");
         var nombreLibro = teclado.nextLine();
-        System.out.println(URL_BASE + nombreLibro.replace(" ", "+"));
-        var json = consumoApi.obtenerDatos(URL_BASE + nombreLibro.replace(" ", "+") );
+        System.out.println(URL_BASE + nombreLibro.replace(" ", "%20"));
+        var json = consumoApi.obtenerDatos(URL_BASE + nombreLibro.replace(" ", "%20") );
         DatosBusqueda busqueda = conversor.obtenerDatos(json, DatosBusqueda.class);
         return busqueda;
     }
@@ -69,28 +79,46 @@ public class Main {
         if(datos.count()==0){
             System.out.println("\nlos criterios de busqueda no arrojaron resultados\n");
         }else{
-            //System.out.println(datos);
             DatosLibro datosLibro = datos.libros().get(0);
             DatosAutor datosAutor = datosLibro.datosAutor().get(0);
-            
-            System.out.println(datosAutor);
-            System.out.println(datosLibro);
-            Autor autor =new Autor(datosAutor);
-            System.out.println(autor);
-            Libro libro =new Libro(datosLibro,autor);
-            System.out.println(libro);
-            //autor.setLibros(libro);
-            System.out.println(autor);
-            //System.out.println(libro.getAutor());
-            //repositorio.save(Autor);
-            repositorioAutor.save(autor);
-            repositorioLibro.save(libro);
-
-
+            Libro libroDb =repositorioLibro.findByCodigo(datosLibro.codigo());
+            if (libroDb!= null) {
+                System.out.println(libroDb);
+            }
+            else{
+                Autor autorDb= repositorioAutor.findByNombre(datosAutor.nombre());
+                if (autorDb!= null) {
+                    System.out.println(autorDb);
+                    Libro libro =new Libro(datosLibro,autorDb);
+                    try{
+                        repositorioLibro.save(libro);
+                        System.out.println(libro);
+                    }
+                    catch(DataIntegrityViolationException e){
+                        System.out.println("lo sentimos no fue posible guardar el libro");
+                    }
+                }
+                else{
+                    Autor autor =new Autor(datosAutor);
+                    Libro libro =new Libro(datosLibro,autor);
+                    try{
+                        repositorioAutor.save(autor);
+                        repositorioLibro.save(libro);
+                        System.out.println(libro);
+                    }
+                    catch(DataIntegrityViolationException e){
+                        System.out.println("lo sentimos no fue posible guardar el libro");
+                    }
+                }
+            }
         }
-        //repositorio.save(serie);
-        //datosSeries.add(datos);
-        //System.out.println(libro);
     }
-
+    private void buscaLibros(){
+        List <Libro> libros= repositorioLibro.findAll();
+        libros.forEach(System.out::println);
+    }
+    private void buscaAutores(){
+        List <Autor> autores= repositorioAutor.findAll();
+        autores.forEach(System.out::println);
+    }
 }

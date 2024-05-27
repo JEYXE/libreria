@@ -13,7 +13,7 @@ public class Libro {
     private String titulo;
     @ManyToOne
     private Autor autor;
-    private List<String> lenguajes;
+    private String lenguajes;
     private Integer totalDescargas;
     
     public Libro() {
@@ -23,16 +23,16 @@ public class Libro {
         this.codigo= datosLibro.codigo();
         this.titulo= datosLibro.titulo();
         this.autor=autor;
-        this.lenguajes=datosLibro.lenguajes();
+        this.lenguajes=datosLibro.lenguajes().get(0);
         this.totalDescargas=datosLibro.totalDescargas();  
     }
     @Override
     public String toString() {
-        return   
-                ", titulo='" + titulo +
-                ", autor='" + autor +
-                ", lenguajes='" + lenguajes +
-                ", total de descargas='" + totalDescargas  ;
+        return  "\n********** LIBRO **********\n"+
+                "\nTITULO: " + titulo +
+                "\nAUTOR: " + autor.getNombre() +
+                "\nLENGUAJE: " + lenguajes +
+                "\nTOTAL DESCARGAS: " + totalDescargas  ;
     }
 
     public Long getId() {
@@ -67,13 +67,7 @@ public class Libro {
         this.autor = autor;
     }
 
-    public List<String> getLenguajes() {
-        return lenguajes;
-    }
-
-    public void setLenguajes(List<String> lenguajes) {
-        this.lenguajes = lenguajes;
-    }
+  
 
     public Integer getTotalDescargas() {
         return totalDescargas;
@@ -81,6 +75,14 @@ public class Libro {
 
     public void setTotalDescargas(Integer totalDescargas) {
         this.totalDescargas = totalDescargas;
+    }
+
+    public String getLenguajes() {
+        return lenguajes;
+    }
+
+    public void setLenguajes(String lenguajes) {
+        this.lenguajes = lenguajes;
     }
     
 }

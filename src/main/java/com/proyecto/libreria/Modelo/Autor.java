@@ -2,6 +2,7 @@ package com.proyecto.libreria.Modelo;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.*;
 
@@ -30,10 +31,14 @@ public class Autor {
 
     @Override
     public String toString() {
-        return  "nombre='" + nombre + 
-                ", año nacimiento='" + anoNacimiento +
-                ", año fallecimiento='" + anoFallecimiento+
-                ", libros: "+ libros ;
+        return  "\n********** AUTOR **********\n"+
+                "NOMBRE: " + nombre + 
+                "\nAÑO DE NACIMIENTO:" + anoNacimiento +
+                "\nAÑO DE FALLECIMIENTO: " + anoFallecimiento +
+                "\nLIBROS: " + String.join(",",libros.stream()
+                .map(l-> l.getTitulo())
+                .collect(Collectors.toList()))+
+                "\n*****************************";
     }
 
     public Long getId() {
