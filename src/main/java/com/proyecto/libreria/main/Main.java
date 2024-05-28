@@ -40,6 +40,10 @@ public class Main {
                     2 - Listar libros registrados
 
                     3 - Listar autores registrados
+
+                    4 - Buscar autores vivos en determinado año
+
+                    5 - Buscar libros por idioma
                                   
                     Q - Salir
                     """;
@@ -53,6 +57,10 @@ public class Main {
                 case "2":buscaLibros();
                     break;
                 case "3":buscaAutores();
+                    break;
+                case "4":buscaAutoresVivos();
+                    break;
+                case "5":buscaPorIdioma();
                     break;
                 case "Q":
                     System.out.println("\nCerrando la aplicación...\n");
@@ -120,5 +128,19 @@ public class Main {
     private void buscaAutores(){
         List <Autor> autores= repositorioAutor.findAll();
         autores.forEach(System.out::println);
+    }
+    private void buscaAutoresVivos(){
+        System.out.println("\nIndica el año a consultar\n");
+        var ano=0;
+        ano = teclado.nextInt();
+        List <Autor> autores= repositorioAutor.autoresVivos(ano);
+        autores.forEach(System.out::println);
+    }
+    private void buscaPorIdioma(){
+        System.out.println("\nEscribe el idioma a consultar (Ej: es,en)\n");
+        var idioma=" ";
+        idioma = teclado.next();
+        List <Libro> libros= repositorioLibro.librosPorIdioma(idioma);
+        libros.forEach(System.out::println);
     }
 }

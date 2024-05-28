@@ -1,8 +1,7 @@
 package com.proyecto.libreria.Modelo;
 
-import java.util.List;
-
 import jakarta.persistence.*;
+
 @Entity
 @Table(name = "libros")
 public class Libro {
@@ -32,7 +31,8 @@ public class Libro {
                 "\nTITULO: " + titulo +
                 "\nAUTOR: " + autor.getNombre() +
                 "\nLENGUAJE: " + lenguajes +
-                "\nTOTAL DESCARGAS: " + totalDescargas  ;
+                "\nTOTAL DESCARGAS: " + totalDescargas +
+                "\n***************************\n" ;
     }
 
     public Long getId() {
