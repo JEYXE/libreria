@@ -3,14 +3,13 @@ package com.proyecto.libreria.main;
 
 import java.util.*;
 
-import org.springframework.dao.DataIntegrityViolationException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import com.proyecto.libreria.Modelo.*;
 import com.proyecto.libreria.repository.AutorRepository;
 import com.proyecto.libreria.repository.LibroRepository;
 import com.proyecto.libreria.servicios.ConsumoApi;
 import com.proyecto.libreria.servicios.ConvierteDatos;
-
 
 public class Main {
     private Scanner teclado = new Scanner(System.in);
@@ -19,7 +18,6 @@ public class Main {
     private ConvierteDatos conversor = new ConvierteDatos();
     private LibroRepository repositorioLibro;
     private AutorRepository repositorioAutor;
-
 
     public Main(LibroRepository repositorioLibro,AutorRepository repositorioAutor) {
         this.repositorioLibro= repositorioLibro;
@@ -35,7 +33,7 @@ public class Main {
 
                     Por favor seleccione una opción:
 
-                    1 - Buscar libros por titulo 
+                    1 - Buscar libros por título 
 
                     2 - Listar libros registrados
 
@@ -44,13 +42,18 @@ public class Main {
                     4 - Buscar autores vivos en determinado año
 
                     5 - Buscar libros por idioma
+
+                    6 - Buscar Autor por nombre
+
+                    7 - Top 10 libros mas descargados
                                   
                     Q - Salir
+
+                    *************************************
                     """;
             System.out.println(menu);
             opcion = teclado.next();
             teclado.nextLine();
-
             switch (opcion) {
                 case "1":buscaLibro();
                     break;
@@ -62,6 +65,10 @@ public class Main {
                     break;
                 case "5":buscaPorIdioma();
                     break;
+                case "6":buscaAutorPorNombre();
+                    break;
+                case "7":librosMasDescargados();
+                    break;
                 case "Q":
                     System.out.println("\nCerrando la aplicación...\n");
                     break;
@@ -69,7 +76,6 @@ public class Main {
                     System.out.println("\nOpción inválida\n");
             }
         }
-
     }
 
     private DatosBusqueda getDatosLibro() {
@@ -82,7 +88,6 @@ public class Main {
     }
 
     private void buscaLibro() {
-
         DatosBusqueda datos = getDatosLibro();
         if(datos.count()==0){
             System.out.println("\nlos criterios de busqueda no arrojaron resultados\n");
@@ -141,6 +146,17 @@ public class Main {
         var idioma=" ";
         idioma = teclado.next();
         List <Libro> libros= repositorioLibro.librosPorIdioma(idioma);
+        libros.forEach(System.out::println);
+    }
+    private void buscaAutorPorNombre(){
+        System.out.println("\nEscribe el nombre del autor que desea consultar\n");
+        var nombreAutor=" ";
+        nombreAutor = teclado.next();
+        List <Autor> autores= repositorioAutor.AutorPorNombre(nombreAutor);
+        autores.forEach(System.out::println);
+    }
+    private void librosMasDescargados(){
+        List<Libro> libros=repositorioLibro.findTop10ByOrderByTotalDescargasDesc();
         libros.forEach(System.out::println);
     }
 }

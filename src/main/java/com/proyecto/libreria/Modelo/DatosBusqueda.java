@@ -9,6 +9,4 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public record DatosBusqueda(
     @JsonAlias("count") Integer count,
     @JsonAlias("results") List<DatosLibro> libros) {
-
-
 }

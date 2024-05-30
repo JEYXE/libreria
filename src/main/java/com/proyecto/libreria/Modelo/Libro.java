@@ -28,7 +28,7 @@ public class Libro {
     @Override
     public String toString() {
         return  "\n********** LIBRO **********\n"+
-                "\nTITULO: " + titulo +
+                "TITULO: " + titulo +
                 "\nAUTOR: " + autor.getNombre() +
                 "\nLENGUAJE: " + lenguajes +
                 "\nTOTAL DESCARGAS: " + totalDescargas +
@@ -67,8 +67,6 @@ public class Libro {
         this.autor = autor;
     }
 
-  
-
     public Integer getTotalDescargas() {
         return totalDescargas;
     }
@@ -84,5 +82,4 @@ public class Libro {
     public void setLenguajes(String lenguajes) {
         this.lenguajes = lenguajes;
     }
-    
 }

@@ -24,5 +24,4 @@ public class LibreriaApplication implements CommandLineRunner {
 		Main main = new Main(repositoryLibro,repositoryAutor);
 		main.muestraElMenu();
 	}
-	
 }

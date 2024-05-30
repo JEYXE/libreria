@@ -3,7 +3,6 @@ package com.proyecto.libreria.Modelo;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -28,7 +27,6 @@ public class Autor {
         this.anoFallecimiento= datosAutor.anoFallecimiento(); 
     }
   
-
     @Override
     public String toString() {
         return  "\n********** AUTOR **********\n"+
@@ -77,14 +75,7 @@ public class Autor {
         return libros;
     }
 
-    public void setLibros(Libro libro) {
-        libro.setAutor(this);
-        System.out.println(libro);
-        this.libros.add(libro);
-        System.out.println(this.libros);
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
     }
-    
-
-    
-
 }
