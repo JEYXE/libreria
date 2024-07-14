@@ -1,29 +1,41 @@
-# Librería - Proyecto de Gestión de Libros
+# Foro
 
-Este proyecto es una aplicación de gestión de libros desarrollada en Java utilizando Spring Boot. Proporciona un consumo de API para buscar libros en la API Gutendex, persistir datos en una base de datos PostgreSQL y consultar información sobre libros y autores.
+Este proyecto es una aplicación de gestión de foro desarrollada en Java utilizando Spring Boot. Proporciona una  API Rest para la gestion de topicos , persistir datos en una base de datos Mysql .
 
-## Funcionalidades
+## Endpoints
 
-1. **Buscar Libro en API Gutendex:**
-   - La aplicación permite buscar libros utilizando la API Gutendex.
-   - Los resultados se pueden filtrar por título, autor, total de descargas y lenguaje.
+1. **/topicos**``
+   - Metodo GET: Lista todos los topicos guardados en la base de datos, ejemplo.
+     http://localhost:8080/topicos/
+     o puedes colocar el id en la url de un topico para una busqueda individual, ejemplo:
+     http://localhost:8080/topicos/1
+   - Metodo POST: crea un nuevo topico, debe enviar el sigiente json:
+     {
+     "titulo": "topico ejemplo",
+     "mensaje": "este es un topico de ejemplo",
+     "idAutor": 1,
+     "idCurso": 1
+      }
+   - Metodo PUT: modifica un topico, debe enviar el sigiente json:
+      {
+	   "id":1,
+      "titulo": "topico actualizado",
+	   "mensaje":"mensaje actualizado"
+      }
+   - Metodo DELETE: elimina logicamente un topico, debe incluir el id del topico en la url, ejemplo:
+     http://localhost:8080/topicos/1
 
-2. **Persistencia en Base de Datos PostgreSQL:**
-   - Los libros encontrados se almacenan en una base de datos PostgreSQL.
-   - Se utiliza Spring Data JPA para interactuar con la base de datos.
-
-3. **Consulta de Datos de Libros y Autores:**
-   - La aplicación proporciona funciones para consultar información sobre libros y autores.
-   - Se pueden obtener detalles como título, autor, lenguaje, año de nacimiento y muerte del autor.
+2. **/login:**
+   - permite la generacion de token para la autorizacion, se debe crear un usuario en la base de datos previamente
 
 ## Configuración
 
 1. **Requisitos previos:**
    - Java 11 o superior instalado.
-   - PostgreSQL instalado y configurado.
+   - Mysql instalado y configurado.
 
 2. **Configuración de la Base de Datos:**
-   - Crea una base de datos en PostgreSQL para almacenar los datos de la librería.
+   - Crea una base de datos en Mysql para almacenar los datos de la librería.
    - Actualiza las propiedades de conexión en `application.properties`.
 
 3. **Ejecución del Proyecto:**
